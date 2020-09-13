@@ -1,0 +1,144 @@
+<html>
+<head>
+    <title>FaceAuth</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+</head>
+<style>
+    canvas {
+        width: 0;
+        height: 0;
+    }
+
+    button {
+        border: none;
+        padding: 20px;
+        margin: 6px;
+        transition: 0.9s ease-in-out;
+        border-radius: 5px;
+        font-family: 'Kumbh Sans', sans-serif;
+    }
+
+    button:hover {
+        box-shadow: 0 6px 15px #84eca7;
+    }
+
+    .org-name {
+        font-size: 40pt;
+        font-family: 'Kumbh Sans', sans-serif;
+        margin-bottom: 0;
+    }
+
+    .org-moto {
+        font-size: 12pt;
+        font-family: 'Kumbh Sans', sans-serif;
+        margin-bottom: 100px;
+    }
+
+    tr {
+        height: 40px;
+    }
+
+    td {
+        font-family: 'Kumbh Sans', sans-serif;
+    }
+
+    .bottom-panel {
+        height: 150px;
+    }
+
+    input {
+        border: none;
+        background-color: #e5e5e5;
+        height: 30px;
+        width: 150px;
+        border-radius: 5px;
+        transition: 0.9s ease-in-out;
+        font-family: 'Kumbh Sans', sans-serif;
+    }
+
+    input:hover {
+        background-color: #84eca7;
+    }
+</style>
+<body>
+<center>
+    <img src="https://static.dribbble.com/users/1278301/screenshots/4342353/face.gif" width="100px"
+         style="margin-bottom: -50px; margin-top: 50px">
+    <p class="org-name">
+        FaceAuth
+    </p>
+    <p class="org-moto">Your easy authenticator...</p>
+    <table>
+
+        <tr class="inp">
+            <td>User Name</td>
+            <td><input type="text" id="user-name" alt="user_name"></td>
+        </tr>
+        <tr class="inp">
+            <td>Password</td>
+            <td><input type="password" id="password" alt="password"></td>
+        </tr>
+        <tr class="bottom-panel">
+            <td>
+                <button type="submit" id="register">Register</button>
+            </td>
+            <td>
+                <button type="submit">Login</button>
+            </td>
+        </tr>
+    </table>
+
+    <video id="webcam" autoplay playsinline width="640" height="480"></video>
+    <canvas id="canvas" width="0"></canvas>
+</center>
+</body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+
+    // $(document).ready(function () {
+    //     $('#register').on('click', function () {
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "/register",
+    //             data: {
+    //                 user: "Adarsh",
+    //                 image: webcam.snap(function(data_uri) {})
+    //             },
+    //             success: function (result) {
+    //                 console.log("done")
+    //             }
+    //         });
+    //     })
+    // });
+    //
+    // const webcamElement = document.getElementById('webcam');
+    // const canvasElement = document.getElementById('canvas');
+    // const webcam = new Webcam(webcamElement, 'user', canvasElement);
+    // webcam.start()
+    //     .then(result => {
+    //         console.log("webcam started");
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
+
+    $(document).ready(function () {
+        $('#register').on('click', function () {
+            uname = document.getElementById('user-name').value
+            password = document.getElementById('password').value
+            $.ajax({
+                type: "POST",
+                url: "/register",
+                data: {
+                    username: uname,
+                    password: password
+                },
+                success: function (result) {
+                    console.log(result)
+                }
+            })
+        })
+    });
+</script>
+</html>
