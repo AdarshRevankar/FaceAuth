@@ -2,14 +2,9 @@
 <head>
     <title>FaceAuth</title>
     <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <style>
-    canvas {
-        width: 0;
-        height: 0;
-    }
-
     button {
         border: none;
         padding: 20px;
@@ -76,62 +71,33 @@
     <p class="org-moto">Your easy authenticator...</p>
     <table>
         <tbody>
-            <tr>
-                <p id="error-id" class="error-message"></p>
-            </tr>
-            <tr class="inp">
-                <td>User Name</td>
-                <td><input type="text" id="user-name" alt="user_name"></td>
-            </tr>
-            <tr class="inp">
-                <td>Password</td>
-                <td><input type="password" id="password" alt="password"></td>
-            </tr>
-            <tr class="bottom-panel">
-                <td>
-                    <button type="submit" id="register">Register</button>
-                </td>
-                <td>
-                    <button type="submit">Login</button>
-                </td>
-            </tr>
+        <tr>
+            <p id="error-id" class="error-message"></p>
+        </tr>
+        <tr class="inp">
+            <td>User Name</td>
+            <td><input type="text" id="user-name" alt="user_name"></td>
+        </tr>
+        <tr class="inp">
+            <td>Password</td>
+            <td><input type="password" id="password" alt="password"></td>
+        </tr>
+        <tr class="bottom-panel">
+            <td>
+                <button type="submit" id="register">Register</button>
+            </td>
+            <td>
+                <button type="submit" id="login">Login</button>
+            </td>
+        </tr>
         </tbody>
     </table>
-
-    <video id="webcam" autoplay playsinline width="640" height="480"></video>
-    <canvas id="canvas" width="0"></canvas>
 </center>
 </body>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type=text/javascript>
 
-    // $(document).ready(function () {
-    //     $('#register').on('click', function () {
-    //         $.ajax({
-    //             type: "POST",
-    //             url: "/register",
-    //             data: {
-    //                 user: "Adarsh",
-    //                 image: webcam.snap(function(data_uri) {})
-    //             },
-    //             success: function (result) {
-    //                 console.log("done")
-    //             }
-    //         });
-    //     })
-    // });
-    //
-    // const webcamElement = document.getElementById('webcam');
-    // const canvasElement = document.getElementById('canvas');
-    // const webcam = new Webcam(webcamElement, 'user', canvasElement);
-    // webcam.start()
-    //     .then(result => {
-    //         console.log("webcam started");
-    //     })
-    //     .catch(err => {
-    //         console.log(err);
-    //     });
-
+    /* Registration */
     $(document).ready(function () {
         $('#register').on('click', function () {
             uname = document.getElementById('user-name').value
@@ -145,6 +111,40 @@
                 },
                 success: function (result) {
                     document.getElementById('error-id').innerHTML = result['register']
+                }
+            })
+        })
+    });
+
+    /* Login */
+    $(document).ready(function () {
+        $('#login').on('click', function () {
+            uname = document.getElementById('user-name').value
+            password = document.getElementById('password').value
+            $.ajax({
+                type: "POST",
+                url: "/login",
+                data: {
+                    username: uname,
+                    password: password
+                },
+                success: function (result) {
+                    if (result['login'] === true) {
+                        $('html').html(result['message'])
+                            // $.ajax({
+                            //     type: "POST",
+                            //     url: "/profile",
+                            //     data: {
+                            //         username: uname,
+                            //         password: password
+                            //     },
+                            //     success: function (response) {
+                            //         $('html').html(response);
+                            //     }
+                            // });
+                    } else {
+                        document.getElementById('error-id').innerHTML = result['message']
+                    }
                 }
             })
         })

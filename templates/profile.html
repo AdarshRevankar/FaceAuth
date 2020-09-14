@@ -1,0 +1,65 @@
+<html>
+<head>
+    <title>Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+    <script>
+
+    </script>
+</head>
+<style>
+    .user-name {
+        font-size: 40pt;
+        font-family: 'Kumbh Sans', sans-serif;
+        margin-top: 100px;
+    }
+
+    .description {
+        margin: 14px;
+        font-size: 10pt;
+        font-family: 'Kumbh Sans', sans-serif;
+    }
+
+    img {
+        transition: 0.9s ease-in-out;
+    }
+
+    canvas {
+        width: 0;
+        height: 0;
+    }
+</style>
+<body>
+<center>
+    <p class="user-name" id="name-greeting">Hi, USERNAME</p>
+    <p class="description"> You seem like new user, Please let us know about yourself </p>
+    <p class="description"> Allow Camera pop-up to capture your face, so next time you can just show your face to
+        authenticate</p>
+    <p class="description" style="margin-top: 50px"> Please click button to start </p>
+    <img id="click" src="https://cdn.iconscout.com/icon/free/png-512/apple-camera-493147.png" width="65px">
+    <br>
+    <br>
+    <video id="webcam" autoplay playsinline width="640" height="480"></video>
+    <canvas id="canvas" width="0"></canvas>
+</center>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('#click').on('click', function () {
+            console.log('clicked')
+            $.ajax({
+                type: "POST",
+                url: "/register",
+                data: {
+                    user: document.getElementById('name-greeting').innerText.replace('Hi, ', ''),
+                    image: webcam.snap()
+                },
+                success: function (result) {
+                    console.log("done")
+                }
+            });
+        })
+    });
+</script>
+</html>
