@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify
 from flask import render_template
 from PIL import Image
 
-from login import check_credintial, insert_new
+from login import check_credintial, input_verification, create_new_account, check_username_existence
 
 app = Flask(__name__)
 
@@ -21,11 +21,14 @@ def register():
     password = str(request.values['password'])
 
     # Check credintial
-    if check_credintial(uname, password):
-        return jsonify({'register': 'exists'})
-    else:
+    if not input_verification(uname, password):
+        return jsonify({'register': 'Credential Error Please follow guidelines for username & password'})
 
-        return jsonify({'register': 'done'})
+    if check_username_existence(uname):
+        return jsonify({'register': 'Account Already Exists'})
+    else:
+        create_new_account(uname, password)
+        return jsonify({'register': 'Registration Sucessful'})
 
 
 @app.route('/capture', methods=['POST'])

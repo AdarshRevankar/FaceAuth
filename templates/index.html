@@ -60,6 +60,11 @@
     input:hover {
         background-color: #84eca7;
     }
+
+    .error-message {
+        color: #84eca7;
+        font-family: 'Kumbh Sans', sans-serif;
+    }
 </style>
 <body>
 <center>
@@ -70,23 +75,27 @@
     </p>
     <p class="org-moto">Your easy authenticator...</p>
     <table>
-
-        <tr class="inp">
-            <td>User Name</td>
-            <td><input type="text" id="user-name" alt="user_name"></td>
-        </tr>
-        <tr class="inp">
-            <td>Password</td>
-            <td><input type="password" id="password" alt="password"></td>
-        </tr>
-        <tr class="bottom-panel">
-            <td>
-                <button type="submit" id="register">Register</button>
-            </td>
-            <td>
-                <button type="submit">Login</button>
-            </td>
-        </tr>
+        <tbody>
+            <tr>
+                <p id="error-id" class="error-message"></p>
+            </tr>
+            <tr class="inp">
+                <td>User Name</td>
+                <td><input type="text" id="user-name" alt="user_name"></td>
+            </tr>
+            <tr class="inp">
+                <td>Password</td>
+                <td><input type="password" id="password" alt="password"></td>
+            </tr>
+            <tr class="bottom-panel">
+                <td>
+                    <button type="submit" id="register">Register</button>
+                </td>
+                <td>
+                    <button type="submit">Login</button>
+                </td>
+            </tr>
+        </tbody>
     </table>
 
     <video id="webcam" autoplay playsinline width="640" height="480"></video>
@@ -135,7 +144,7 @@
                     password: password
                 },
                 success: function (result) {
-                    console.log(result)
+                    document.getElementById('error-id').innerHTML = result['register']
                 }
             })
         })
