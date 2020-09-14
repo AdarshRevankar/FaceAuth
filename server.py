@@ -11,11 +11,6 @@ from login import input_verification, create_new_account, check_username_existen
 app = Flask(__name__)
 
 
-@app.route('/')
-def start():
-    return render_template('index.html')
-
-
 @app.route('/register', methods=['POST'])
 def register():
     uname = str(request.values['username'])
@@ -43,6 +38,10 @@ def capture():
     return jsonify({'status': 'done'})
 
 
+@app.route('/')
+def start():
+    return render_template('index.html')
+
+
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True, port=port)
+    app.run(threaded=True, port=5000)
